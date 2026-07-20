@@ -1,0 +1,48 @@
+generated: '2026-07-19'
+method: probed
+source: https://api.lightningreach.org/docs
+notes: >-
+  The published Lightning Reach API OpenAPI declares NO components.securitySchemes
+  and no operation-level security[], yet the API is fully authenticated: every
+  path on api.lightningreach.org returns HTTP 401 with
+  {"statusCode":401,"message":"UnauthorizedException"}. The auth mechanism is
+  therefore real but undocumented in the machine-readable contract. This profile
+  records what was observed live on 2026-07-19 rather than asserting a scheme the
+  provider has not published. derive-authentication.py produced no profile for
+  this provider (0 schemes) — this file is the probed supplement.
+summary:
+  types: []
+  api_key_in: []
+  oauth2_flows: []
+  documented_in_spec: false
+  auth_required: true
+schemes: []
+observed:
+  enforcement: gateway
+  note: >-
+    The 401 is returned before routing — unknown paths (/v1/nope) and unsupported
+    methods (DELETE) also return 401 rather than 404/405, indicating a global
+    authentication guard ahead of the router.
+  challenge_header: null
+  www_authenticate: absent
+  error_envelope:
+    statusCode: 401
+    message: UnauthorizedException
+  probes:
+    - {path: /v1/support-schemes, method: GET, status: 401}
+    - {path: /v1/applications, method: GET, status: 401}
+    - {path: /v1/webhooks, method: GET, status: 401}
+    - {path: /v1/support-schemes, method: GET, header: 'Authorization: Bearer <invalid>', status: 401}
+    - {path: /v1/support-schemes, method: GET, header: 'x-api-key: <invalid>', status: 401}
+    - {path: /docs, method: GET, status: 200, note: Swagger UI is public}
+tenancy:
+  model: organisation
+  evidence: >-
+    The GET /v1/support-schemes operation description reads "Retrieves all
+    available support schemes for the authenticated organisation", so credentials
+    are scoped to a partner organisation rather than an end user.
+gaps:
+  - securitySchemes absent from the OpenAPI; agents cannot discover how to authenticate.
+  - No WWW-Authenticate challenge on 401.
+  - No public authentication documentation page found on lightningreach.org.
+  - Credentials appear to be issued via partner onboarding (contact hello@lightningreach.org).
