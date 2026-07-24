@@ -1,0 +1,578 @@
+openapi: 3.0.0
+info:
+  title: Lightning Reach Applications API
+  description: The Lightning Reach API documentation
+  version: '1.0'
+  contact: {}
+servers: []
+tags:
+- name: Applications
+paths:
+  /v1/applications:
+    get:
+      operationId: PublicGrantApplicationsController_findAll_v1
+      parameters:
+      - name: supportSchemeIds
+        required: false
+        in: query
+        description: Search by support scheme IDs
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Search by client name, email or application reference
+        schema:
+          type: string
+      - name: status
+        required: false
+        in: query
+        description: Filter by application status
+        schema:
+          type: string
+          enum:
+          - INVITED
+          - STARTED
+          - SUBMITTED
+          - AWAITING_HOUSEHOLD
+          - INFO_REQUESTED
+          - REVIEWED
+          - DECLINED
+          - APPROVED
+          - OPTED_OUT
+          - INACTIVE
+          - INELIGIBLE
+      - name: latestSubmissionFrom
+        required: false
+        in: query
+        description: Filter by latest submission date from (ISO 8601 timestamp)
+        schema:
+          format: date-time
+          type: string
+      - name: latestSubmissionTo
+        required: false
+        in: query
+        description: Filter by latest submission date to (ISO 8601 timestamp)
+        schema:
+          format: date-time
+          type: string
+      - name: page
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: pageSize
+        required: false
+        in: query
+        schema:
+          type: number
+      - name: sortKey
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - clientName
+          - supportScheme
+          - reference
+          - createdAt
+          - firstSubmissionAt
+          - latestSubmissionAt
+      - name: sortOrder
+        required: false
+        in: query
+        schema:
+          type: string
+          enum:
+          - DESC
+          - ASC
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicApplicationsResponseDto'
+      summary: Get all applications
+      tags:
+      - Applications
+    post:
+      operationId: PublicGrantApplicationsController_submitApplication_v1
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApplicationDto'
+      responses:
+        '201':
+          description: ''
+      summary: Submit an application
+      tags:
+      - Applications
+  /v1/applications/{id}:
+    get:
+      operationId: PublicGrantApplicationsController_findById_v1
+      parameters:
+      - name: includeDataDictionary
+        required: false
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicApplicationDataResponseDto'
+      summary: Get application by id
+      tags:
+      - Applications
+  /v1/applications/{id}/assets:
+    get:
+      operationId: PublicGrantApplicationsController_getFiles_v1
+      parameters:
+      - name: includeFormData
+        required: false
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicFileResponseDto'
+      summary: Get application assets
+      tags:
+      - Applications
+  /v1/applications/{id}/status:
+    put:
+      operationId: PublicGrantApplicationsController_updateStatusById_v1
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateApplicationStatusDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateStatusResponseDto'
+      summary: Update application status by id
+      tags:
+      - Applications
+  /v1/applications/{id}/referral:
+    post:
+      operationId: PublicGrantApplicationsController_submitApplicationReferral_v1
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReferralDto'
+      responses:
+        '201':
+          description: ''
+      summary: Submit an application referral
+      tags:
+      - Applications
+components:
+  schemas:
+    CreateReferralDto:
+      type: object
+      properties:
+        supportId:
+          type: string
+        declarationOfTruth:
+          type: boolean
+        skipSubmissionEmails:
+          type: boolean
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleDto'
+      required:
+      - supportId
+      - declarationOfTruth
+      - modules
+    PublicFileResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        fileName:
+          type: string
+        downloadUrl:
+          type: string
+          description: Download URL expires in 30 minutes
+        scanStatus:
+          enum:
+          - PENDING
+          - SCANNED
+          - QUARANTINED
+          type: string
+        version:
+          type: number
+        taskId:
+          type: string
+      required:
+      - id
+      - fileName
+      - downloadUrl
+      - scanStatus
+      - version
+    PublicApplicationsResponseDto:
+      type: object
+      properties:
+        grantApplications:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicApplicationDto'
+        count:
+          type: number
+      required:
+      - grantApplications
+      - count
+    ModuleDto:
+      type: object
+      properties:
+        moduleId:
+          type: string
+        data:
+          type: object
+          additionalProperties:
+            type: object
+          description: Two-level config path -> data object
+          example:
+            info-sharing:
+              consent: true
+              informationSharing: true
+      required:
+      - moduleId
+      - data
+    AwardDto:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - LSV1300
+          - LSV0600
+          - LSV0400
+          - LSV1310
+          - LSV2000
+          - LSV3000
+          - LSV3010
+          - LSV3020
+          - LSV5000
+          - LSV0100
+          - LSV1400
+          - LSV1900
+          - LSV1000
+          - LSV0300
+          - LSV1200
+          - LSV0700
+          - LSV0200
+          - LSV1800
+          - LSV0500
+          - LSV0510
+          - LSV0520
+          - LSV0530
+          - LSV0540
+          - LSV1100
+          - LSV1700
+          - LSV0800
+          - LSV0900
+          - LSV0910
+          - LSV0920
+          description: 'Award type code. Available options:
+
+            • LSV1300: Education and training - adult
+
+            • LSV0600: Housing related costs
+
+            • LSV0400: Devices and digital access
+
+            • LSV1310: Education and training - children
+
+            • LSV2000: Other non-monetary support (please specify):
+
+            • LSV3000: Benefit entitlement check
+
+            • LSV3010: Benefit claims support
+
+            • LSV3020: Benefit uplift
+
+            • LSV5000: Referral to other support (please specify):
+
+            • LSV0100: Other / unrestricted costs (please specify):
+
+            • LSV1400: Employment and work
+
+            • LSV1900: Other advice services
+
+            • LSV1000: Travel and transport
+
+            • LSV0300: Furniture and appliances
+
+            • LSV1200: Health, care and wellbeing service costs
+
+            • LSV0700: Food and essential items
+
+            • LSV0200: Equipment and home adaptations
+
+            • LSV1800: Legal and application fees
+
+            • LSV0500: Energy and utilities
+
+            • LSV0510: Energy efficiency measures
+
+            • LSV0520: Energy efficiency advice
+
+            • LSV0530: Smart meter advice
+
+            • LSV0540: Priority Services Register (PSR)
+
+            • LSV1100: Holiday and activity costs
+
+            • LSV1700: Funeral and bereavement costs
+
+            • LSV0800: Clothing
+
+            • LSV0900: Non-priority debt and bankruptcy fees
+
+            • LSV0910: Debt advice
+
+            • LSV0920: Debt interventions'
+        value:
+          type: number
+          minimum: 1
+        paymentType:
+          enum:
+          - 'BACS: applicant payment'
+          - 'BACS: supplier payment'
+          - Purchase from preferred Supplier
+          - Vouchers
+          - Cheques
+          - Gift Card
+          - Electronic debit/credit card
+          type: string
+        paymentDate:
+          type: string
+        details:
+          type: string
+      required:
+      - type
+    ClientDto:
+      type: object
+      properties:
+        id:
+          type: string
+        role:
+          type: string
+        email:
+          type: string
+      required:
+      - id
+      - role
+    ApplicationTaskDto:
+      type: object
+      properties:
+        taskId:
+          type: string
+        taskName:
+          type: string
+        dataDictionary:
+          type: object
+        data:
+          type: object
+        version:
+          type: number
+        clientId:
+          type: string
+      required:
+      - taskId
+      - taskName
+      - data
+      - version
+      - clientId
+    PublicApplicationDto:
+      type: object
+      properties:
+        id:
+          type: string
+        clientName:
+          type: string
+        reference:
+          type: string
+        supportSchemeId:
+          type: string
+        supportSchemeName:
+          type: string
+        firstSubmissionAt:
+          format: date-time
+          type: string
+        latestSubmissionAt:
+          format: date-time
+          type: string
+        status:
+          enum:
+          - INVITED
+          - STARTED
+          - SUBMITTED
+          - AWAITING_HOUSEHOLD
+          - INFO_REQUESTED
+          - REVIEWED
+          - DECLINED
+          - APPROVED
+          - OPTED_OUT
+          - INACTIVE
+          - INELIGIBLE
+          type: string
+        stage:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - clientName
+      - supportSchemeId
+      - supportSchemeName
+      - status
+      - createdAt
+    UpdateStatusResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the updated application
+          format: uuid
+      required:
+      - id
+    CreateApplicationDto:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        supportId:
+          type: string
+        declarationOfTruth:
+          type: boolean
+        skipSubmissionEmails:
+          type: boolean
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleDto'
+      required:
+      - firstName
+      - lastName
+      - supportId
+      - declarationOfTruth
+      - modules
+    UpdateApplicationStatusDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - INVITED
+          - STARTED
+          - SUBMITTED
+          - AWAITING_HOUSEHOLD
+          - REVIEWED
+          - DECLINED
+          - APPROVED
+          - OPTED_OUT
+          - INACTIVE
+          - INELIGIBLE
+          type: string
+        stage:
+          type: string
+        decisionDetails:
+          type: string
+        decisionReason:
+          type: string
+        note:
+          type: string
+        awardDate:
+          type: string
+        awards:
+          type: array
+          items:
+            $ref: '#/components/schemas/AwardDto'
+      required:
+      - status
+    PublicApplicationDataResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        clientName:
+          type: string
+        reference:
+          type: string
+        supportSchemeId:
+          type: string
+        supportSchemeName:
+          type: string
+        firstSubmissionAt:
+          format: date-time
+          type: string
+        latestSubmissionAt:
+          format: date-time
+          type: string
+        status:
+          enum:
+          - INVITED
+          - STARTED
+          - SUBMITTED
+          - AWAITING_HOUSEHOLD
+          - INFO_REQUESTED
+          - REVIEWED
+          - DECLINED
+          - APPROVED
+          - OPTED_OUT
+          - INACTIVE
+          - INELIGIBLE
+          type: string
+        stage:
+          type: string
+        applicationTasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationTaskDto'
+        clients:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClientDto'
+        supportOrganisationName:
+          type: string
+        supportWorkerEmail:
+          type: string
+        version:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - clientName
+      - supportSchemeId
+      - supportSchemeName
+      - status
+      - createdAt

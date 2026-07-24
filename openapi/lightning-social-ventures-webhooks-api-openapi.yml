@@ -1,0 +1,69 @@
+openapi: 3.0.0
+info:
+  title: Lightning Reach Applications Webhooks API
+  description: The Lightning Reach API documentation
+  version: '1.0'
+  contact: {}
+servers: []
+tags:
+- name: Webhooks
+paths:
+  /v1/webhooks:
+    get:
+      operationId: PublicWebhooksController_findAll_v1
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookPublicDto'
+      summary: Get configured webhooks
+      tags:
+      - Webhooks
+  /v1/webhooks/keys/{id}/public:
+    get:
+      operationId: PublicWebhooksController_getPublicKey_v1
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookPublicKeyResponseDto'
+      summary: Get webhook's public key
+      tags:
+      - Webhooks
+components:
+  schemas:
+    WebhookPublicDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        events:
+          type: array
+          items:
+            type: string
+        webhookUrl:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - name
+      - events
+      - webhookUrl
+      - createdAt
+    WebhookPublicKeyResponseDto:
+      type: object
+      properties:
+        key:
+          type: string
+      required:
+      - key

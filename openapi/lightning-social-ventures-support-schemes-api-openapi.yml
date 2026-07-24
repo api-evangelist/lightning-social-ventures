@@ -1,0 +1,69 @@
+openapi: 3.0.0
+info:
+  title: Lightning Reach Applications Support Schemes API
+  description: The Lightning Reach API documentation
+  version: '1.0'
+  contact: {}
+servers: []
+tags:
+- name: Support Schemes
+paths:
+  /v1/support-schemes:
+    get:
+      description: Retrieves all available support schemes for the authenticated organisation
+      operationId: PublicGrantsController_findAll_v1
+      parameters: []
+      responses:
+        '200':
+          description: List of available support schemes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PublicGrantResponseDto'
+      summary: Get available support schemes
+      tags:
+      - Support Schemes
+components:
+  schemas:
+    PublicGrantResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        frozen:
+          type: boolean
+        frozenCopy:
+          type: object
+        awardReasons:
+          type: array
+          items:
+            type: string
+        reviewReasons:
+          type: array
+          items:
+            type: string
+        declineReasons:
+          type: array
+          items:
+            type: string
+        stages:
+          type: array
+          items:
+            type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - name
+      - frozen
+      - frozenCopy
+      - awardReasons
+      - reviewReasons
+      - declineReasons
+      - stages
+      - createdAt
