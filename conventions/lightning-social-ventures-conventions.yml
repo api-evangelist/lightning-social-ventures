@@ -1,0 +1,102 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/lightning-social-ventures-lightning-reach-openapi.json
+notes: >-
+  Cross-cutting request/response semantics for the Lightning Reach API, derived
+  from the published OpenAPI and from live response headers observed on
+  2026-07-19. Lightning Reach publishes no prose developer documentation, so
+  everything here is grounded in the spec or in an observed response.
+authentication:
+  style: undocumented
+  required: true
+  see: authentication/lightning-social-ventures-authentication.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  evidence: every path is prefixed /v1/ and every operationId is suffixed _v1
+  spec_version: '1.0'
+  header_negotiation: false
+pagination:
+  style: page-number
+  supported_on: [PublicGrantApplicationsController_findAll_v1]
+  request_params:
+    - {name: page, in: query, type: number, required: false}
+    - {name: pageSize, in: query, type: number, required: false}
+  response_fields:
+    - {name: grantApplications, description: the page of results}
+    - {name: count, description: total number of matching applications}
+  defaults: not documented
+  max_page_size: not documented
+sorting:
+  supported_on: [PublicGrantApplicationsController_findAll_v1]
+  params:
+    - {name: sortKey, values: [clientName, supportScheme, reference, createdAt, firstSubmissionAt, latestSubmissionAt]}
+    - {name: sortOrder, values: [DESC, ASC]}
+filtering:
+  supported_on: [PublicGrantApplicationsController_findAll_v1]
+  params:
+    - {name: supportSchemeIds, description: Search by support scheme IDs}
+    - {name: search, description: Search by client name, email or application reference}
+    - {name: status, description: Filter by application status}
+    - {name: latestSubmissionFrom, description: ISO 8601 timestamp lower bound}
+    - {name: latestSubmissionTo, description: ISO 8601 timestamp upper bound}
+field_expansion:
+  style: boolean-flag
+  params:
+    - {name: includeDataDictionary, on: PublicGrantApplicationsController_findById_v1, description: include the task data dictionary alongside submitted data}
+    - {name: includeFormData, on: PublicGrantApplicationsController_getFiles_v1, description: include form data alongside file assets}
+idempotency:
+  supported: false
+  evidence: >-
+    No Idempotency-Key header or parameter appears anywhere in the OpenAPI, and
+    no idempotency contract is documented. POST /v1/applications and
+    POST /v1/applications/{id}/referral are not safe to blind-retry.
+  note: >-
+    No `Idempotency` pointer is emitted in apis.yml because the provider has no
+    idempotency contract.
+request_tracing:
+  standard: w3c-trace-context
+  headers_observed: [traceparent, x-cloud-trace-context]
+  evidence: >-
+    Live responses carry `traceparent:
+    00-<trace-id>-<span-id>-01` and a Google Cloud `x-cloud-trace-context`
+    header, so requests are traceable end to end.
+  client_supplied_request_id: not documented
+concurrency:
+  optimistic_locking: true
+  evidence: >-
+    PublicApplicationDataResponseDto, ApplicationTaskDto and
+    PublicFileResponseDto each carry a numeric `version` field, and responses
+    carry weak ETags (etag: W/"..."). Conditional requests are not documented.
+error_envelope:
+  rfc9457: false
+  shape: {statusCode: integer, message: string}
+  see: errors/lightning-social-ventures-problem-types.yml
+rate_limiting:
+  documented: false
+  headers_observed: []
+  note: No rate-limit headers were returned on any probed response.
+caching:
+  policy: no-store
+  headers_observed:
+    cache-control: 'no-store, no-cache, must-revalidate, proxy-revalidate'
+    surrogate-control: no-store
+    expires: '0'
+  note: Consistent with an API handling personal financial-hardship data.
+security_headers:
+  observed: [strict-transport-security, content-security-policy, x-content-type-options, x-frame-options, referrer-policy, cross-origin-opener-policy, cross-origin-resource-policy]
+  note: Helmet-style hardening on the API host; HSTS max-age=31536000 includeSubDomains.
+media_types:
+  request: [application/json]
+  response: [application/json]
+file_handling:
+  pattern: presigned-download-url
+  evidence: >-
+    PublicFileResponseDto.downloadUrl is documented as "Download URL expires in
+    30 minutes"; files also carry a scanStatus of PENDING/SCANNED/QUARANTINED.
+cross_links:
+  errors: errors/lightning-social-ventures-problem-types.yml
+  lifecycle: lifecycle/lightning-social-ventures-lifecycle.yml
+  authentication: authentication/lightning-social-ventures-authentication.yml
+  webhooks: asyncapi/lightning-social-ventures-webhooks.yml
+  data_model: data-model/lightning-social-ventures-data-model.yml

@@ -1,0 +1,30 @@
+generated: '2026-07-19'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: lightningreach.org
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 16 10:56:30 2026 GMT
+  hsts: true
+  hsts_max_age: 31556952
+- host: api.lightningreach.org
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep  1 11:25:06 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+  hsts_include_subdomains: true
+  hsts_note: >-
+    The automated HEAD probe recorded hsts as null because the host answers 401
+    to unauthenticated requests. A direct GET on 2026-07-19 returned
+    'strict-transport-security: max-age=31536000; includeSubDomains' alongside a
+    full Helmet header set (CSP, X-Content-Type-Options, X-Frame-Options,
+    Referrer-Policy, COOP, CORP). Corrected by hand from that observation.
+domains:
+- domain: lightningreach.org
+  dnssec: true
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: none

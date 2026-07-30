@@ -1,0 +1,123 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/lightning-social-ventures-lightning-reach-openapi.json
+notes: >-
+  Entity-relationship graph derived from the 15 component schemas and their $ref
+  links plus id-reference fields. Lightning Reach publishes no object reference
+  page, so id prefixes/formats are recorded only where the spec states them.
+entities:
+  - name: Application
+    schemas: [PublicApplicationDto, PublicApplicationDataResponseDto]
+    description: >-
+      A person's application to a support scheme. The summary shape
+      (PublicApplicationDto) is returned by list; the detail shape
+      (PublicApplicationDataResponseDto) adds tasks and clients.
+    id_field: id
+    id_format: string
+    status_field: status
+    status_values: [INVITED, STARTED, SUBMITTED, AWAITING_HOUSEHOLD, INFO_REQUESTED, REVIEWED, DECLINED, APPROVED, OPTED_OUT, INACTIVE, INELIGIBLE]
+    versioned: true
+    operations: [PublicGrantApplicationsController_findAll_v1, PublicGrantApplicationsController_findById_v1, PublicGrantApplicationsController_submitApplication_v1, PublicGrantApplicationsController_updateStatusById_v1, PublicGrantApplicationsController_submitApplicationReferral_v1]
+  - name: SupportScheme
+    schemas: [PublicGrantResponseDto]
+    description: >-
+      A grant / support programme configured by a partner organisation, carrying
+      its own stages and its own award, review and decline reason vocabularies.
+    id_field: id
+    operations: [PublicGrantsController_findAll_v1]
+  - name: ApplicationTask
+    schemas: [ApplicationTaskDto]
+    description: A form/step within an application, holding submitted data and its data dictionary.
+    id_field: taskId
+    versioned: true
+  - name: Client
+    schemas: [ClientDto]
+    description: A person attached to an application, with a role (e.g. applicant or household member).
+    id_field: id
+  - name: Asset
+    schemas: [PublicFileResponseDto]
+    description: A file uploaded against an application task, with malware-scan status and an expiring download URL.
+    id_field: id
+    versioned: true
+    operations: [PublicGrantApplicationsController_getFiles_v1]
+  - name: Award
+    schemas: [AwardDto]
+    description: >-
+      A unit of support granted on an application — a typed award code (the LSV
+      taxonomy), an optional monetary value and a payment method.
+    id_field: null
+    embedded_in: UpdateApplicationStatusDto
+  - name: Module
+    schemas: [ModuleDto]
+    description: A configurable block of application data submitted as a two-level config path -> data object.
+    id_field: moduleId
+  - name: Webhook
+    schemas: [WebhookPublicDto, WebhookPublicKeyResponseDto]
+    description: A partner-configured webhook subscription and its verification public key.
+    id_field: id
+    operations: [PublicWebhooksController_findAll_v1, PublicWebhooksController_getPublicKey_v1]
+relationships:
+  - {from: Application, to: SupportScheme, type: belongs_to, via: supportSchemeId, evidence: PublicApplicationDto.supportSchemeId + supportSchemeName}
+  - {from: Application, to: ApplicationTask, type: has_many, via: applicationTasks, evidence: $ref ApplicationTaskDto}
+  - {from: Application, to: Client, type: has_many, via: clients, evidence: $ref ClientDto}
+  - {from: Application, to: Asset, type: has_many, via: 'GET /v1/applications/{id}/assets', evidence: PublicGrantApplicationsController_getFiles_v1}
+  - {from: ApplicationTask, to: Client, type: belongs_to, via: clientId, evidence: ApplicationTaskDto.clientId}
+  - {from: Asset, to: ApplicationTask, type: belongs_to, via: taskId, evidence: PublicFileResponseDto.taskId}
+  - {from: UpdateApplicationStatusDto, to: Award, type: has_many, via: awards, evidence: $ref AwardDto}
+  - {from: CreateApplicationDto, to: Module, type: has_many, via: modules, evidence: $ref ModuleDto}
+  - {from: CreateReferralDto, to: Module, type: has_many, via: modules, evidence: $ref ModuleDto}
+  - {from: CreateApplicationDto, to: SupportScheme, type: belongs_to, via: supportId, evidence: CreateApplicationDto.supportId}
+  - {from: CreateReferralDto, to: SupportScheme, type: belongs_to, via: supportId, evidence: CreateReferralDto.supportId}
+  - {from: PublicApplicationsResponseDto, to: Application, type: has_many, via: grantApplications, evidence: $ref PublicApplicationDto}
+vocabularies:
+  award_types:
+    source: openapi AwardDto.type enum
+    prefix: LSV
+    note: >-
+      The LSV prefix is Lightning Social Ventures' own award taxonomy — 29 codes
+      covering the categories of support a scheme can grant.
+    count: 29
+    codes:
+      LSV0100: Other / unrestricted costs
+      LSV0200: Equipment and home adaptations
+      LSV0300: Furniture and appliances
+      LSV0400: Devices and digital access
+      LSV0500: Energy and utilities
+      LSV0510: Energy efficiency measures
+      LSV0520: Energy efficiency advice
+      LSV0530: Smart meter advice
+      LSV0540: Priority Services Register (PSR)
+      LSV0600: Housing related costs
+      LSV0700: Food and essential items
+      LSV0800: Clothing
+      LSV0900: Non-priority debt and bankruptcy fees
+      LSV0910: Debt advice
+      LSV0920: Debt interventions
+      LSV1000: Travel and transport
+      LSV1100: Holiday and activity costs
+      LSV1200: Health, care and wellbeing service costs
+      LSV1300: Education and training - adult
+      LSV1310: Education and training - children
+      LSV1400: Employment and work
+      LSV1700: Funeral and bereavement costs
+      LSV1800: Legal and application fees
+      LSV1900: Other advice services
+      LSV2000: Other non-monetary support
+      LSV3000: Benefit entitlement check
+      LSV3010: Benefit claims support
+      LSV3020: Benefit uplift
+      LSV5000: Referral to other support
+  payment_types:
+    source: openapi AwardDto.paymentType enum
+    values:
+      - 'BACS: applicant payment'
+      - 'BACS: supplier payment'
+      - Purchase from preferred Supplier
+      - Vouchers
+      - Cheques
+      - Gift Card
+      - Electronic debit/credit card
+  file_scan_status:
+    source: openapi PublicFileResponseDto.scanStatus enum
+    values: [PENDING, SCANNED, QUARANTINED]
+render: null

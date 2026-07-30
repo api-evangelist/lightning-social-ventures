@@ -1,0 +1,70 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/lightning-social-ventures-lightning-reach-openapi.json
+spec_type: Webhooks
+notes: >-
+  Lightning Reach publishes NO AsyncAPI document — none was found on the docs
+  host, the API host, or any GitHub organisation (no GitHub org exists). It does,
+  however, ship a real webhook surface: a Webhooks tag in the OpenAPI with a
+  management endpoint and, notably, a public-key endpoint for verifying webhook
+  signatures. The event catalog itself is per-tenant (returned in
+  WebhookPublicDto.events as a free-form string array) and is NOT enumerated in
+  any published artifact, so no event names are listed here — enumerating them
+  would require fabrication. A partner discovers their own configured events by
+  calling the management endpoint.
+webhooks:
+  management_api:
+    list:
+      operationId: PublicWebhooksController_findAll_v1
+      method: GET
+      path: /v1/webhooks
+      summary: Get configured webhooks
+      returns: WebhookPublicDto
+    public_key:
+      operationId: PublicWebhooksController_getPublicKey_v1
+      method: GET
+      path: /v1/webhooks/keys/{id}/public
+      summary: Get webhook's public key
+      returns: WebhookPublicKeyResponseDto
+  subscription_shape:
+    schema: WebhookPublicDto
+    fields:
+      - {name: id, type: string, required: true}
+      - {name: name, type: string, required: true}
+      - {name: events, type: array<string>, required: true, note: per-tenant event selection; values not published}
+      - {name: webhookUrl, type: string, required: true}
+      - {name: createdAt, type: date-time, required: true}
+  verification:
+    model: asymmetric-signature
+    public_key_endpoint: /v1/webhooks/keys/{id}/public
+    schema: WebhookPublicKeyResponseDto
+    fields:
+      - {name: key, type: string, required: true}
+    note: >-
+      Consumers fetch the per-webhook public key and verify the signature on
+      delivered payloads. The signature header name and algorithm are not
+      documented in the OpenAPI.
+  configuration: >-
+    Webhook endpoints appear to be provisioned out of band (partner onboarding) —
+    the public API exposes read-only listing plus key retrieval, with no
+    create/update/delete operations.
+event_catalog:
+  published: false
+  reason: >-
+    events[] is typed as a bare array of strings with no enum and no docs page;
+    the concrete event names are tenant configuration.
+  inferred_domain: >-
+    Application lifecycle (the PublicApplicationDto.status enum —
+    INVITED/STARTED/SUBMITTED/AWAITING_HOUSEHOLD/INFO_REQUESTED/REVIEWED/
+    DECLINED/APPROVED/OPTED_OUT/INACTIVE/INELIGIBLE) is the most likely event
+    source, but this is inference and is deliberately NOT recorded as a catalog.
+asyncapi:
+  published: false
+  probed:
+    - {url: 'https://api.lightningreach.org/asyncapi.yaml', status: 401}
+    - {url: 'https://docs.lightningreach.org/', status: 0, note: host does not resolve}
+gaps:
+  - No AsyncAPI document.
+  - No published event-name catalog or payload schemas.
+  - Signature header name and algorithm undocumented.
+  - No retry/redelivery policy documented.

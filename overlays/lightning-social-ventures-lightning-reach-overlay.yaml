@@ -1,0 +1,79 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Lightning Reach API
+  version: 1.0.0
+extends: openapi/lightning-social-ventures-lightning-reach-openapi.json
+x-generated: '2026-07-19'
+x-method: generated
+x-notes: >-
+  The harvested spec is served by Swagger UI at https://api.lightningreach.org/docs
+  with three material omissions: it declares no servers[], no securitySchemes
+  (although every endpoint returns 401), and no error responses. This overlay
+  records API Evangelist's enhancements without mutating the harvested document.
+  The securityScheme added below is named `undocumentedAuth` and is deliberately
+  marked x-unverified — the provider has not published its auth mechanism, so it
+  is a placeholder to be replaced once documented, not a claim about how the API
+  authenticates.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-slug: lightning-social-ventures
+      x-apievangelist-harvested: '2026-07-19'
+      x-apievangelist-source: https://api.lightningreach.org/docs/swagger-ui-init.js
+      contact:
+        name: Lightning Reach
+        email: hello@lightningreach.org
+        url: https://www.lightningreach.org/
+  - target: $
+    update:
+      servers:
+        - url: https://api.lightningreach.org
+          description: Production (observed live; absent from the published spec)
+  - target: $
+    update:
+      tags:
+        - name: Applications
+          description: Submit, list, inspect and progress applications to a support scheme.
+        - name: Support Schemes
+          description: The grant / support programmes available to the authenticated organisation.
+        - name: Webhooks
+          description: Read configured webhook subscriptions and retrieve their verification public keys.
+  - target: $.components
+    update:
+      securitySchemes:
+        undocumentedAuth:
+          type: http
+          scheme: bearer
+          description: >-
+            PLACEHOLDER. Every endpoint returns 401
+            {"statusCode":401,"message":"UnauthorizedException"} with no
+            WWW-Authenticate challenge, and the provider publishes no auth
+            documentation. Credentials are issued through partner onboarding
+            (hello@lightningreach.org).
+          x-unverified: true
+  - target: $.paths['/v1/applications'].get
+    update:
+      x-apievangelist-pagination:
+        style: page-number
+        params: [page, pageSize]
+        response_total: count
+  - target: $.paths['/v1/applications'].post
+    update:
+      x-apievangelist-idempotency:
+        supported: false
+        note: No Idempotency-Key contract; blind retries may create duplicate applications.
+  - target: $.paths['/v1/applications/{id}/referral'].post
+    update:
+      x-apievangelist-idempotency:
+        supported: false
+        note: No Idempotency-Key contract; blind retries may create duplicate referrals.
+  - target: $.paths['/v1/applications/{id}/status'].put
+    update:
+      x-apievangelist-consequence: >-
+        Writes an approval or decline decision and its monetary awards onto a
+        real person's hardship application. Treat as a high-consequence write.
+  - target: $.components.schemas.PublicFileResponseDto.properties.scanStatus
+    update:
+      x-apievangelist-guidance: >-
+        Only serve or download assets with scanStatus SCANNED. QUARANTINED
+        indicates the malware scan failed.

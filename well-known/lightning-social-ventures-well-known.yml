@@ -1,0 +1,38 @@
+generated: '2026-07-19'
+method: probed
+notes: >-
+  No .well-known documents are published on any Lightning Reach host. The
+  marketing site (Wix) answers /.well-known/* with HTTP 400; the applicant SPA
+  (apply.lightningreach.org) returns HTTP 200 but serves its index.html shell
+  for every path, so a 200 there is NOT a real document — recorded as
+  spa_fallback below. The API host requires authentication and returns 401 for
+  every path including /.well-known/*. No files were saved: nothing genuine was
+  found. Recorded so a re-run does not re-probe blindly.
+hosts:
+  - host: https://www.lightningreach.org
+    documents:
+      - path: /.well-known/security.txt
+        status: 400
+      - path: /.well-known/openid-configuration
+        status: 400
+      - path: /.well-known/api-catalog
+        status: 400
+  - host: https://apply.lightningreach.org
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        result: spa_fallback
+        note: Returns the React index.html shell, not an RFC 9116 document.
+  - host: https://api.lightningreach.org
+    documents:
+      - path: /.well-known/security.txt
+        status: 401
+      - path: /.well-known/openid-configuration
+        status: 401
+      - path: /.well-known/oauth-authorization-server
+        status: 401
+      - path: /.well-known/api-catalog
+        status: 401
+      - path: /.well-known/ai-plugin.json
+        status: 401
+found: []

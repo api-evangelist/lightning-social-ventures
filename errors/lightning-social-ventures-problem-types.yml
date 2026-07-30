@@ -1,0 +1,50 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/lightning-social-ventures-lightning-reach-openapi.json
+format: nestjs-http-exception
+notes: >-
+  The Lightning Reach OpenAPI documents ONLY success responses (200/201) — there
+  are no 4xx/5xx responses anywhere in the spec, so there is nothing to derive an
+  error catalog from. The single problem type below was observed live on
+  2026-07-19 by probing the API. The envelope is the NestJS default
+  ({"statusCode": <int>, "message": <string>}), NOT RFC 9457
+  application/problem+json.
+envelope:
+  content_type: application/json
+  shape:
+    statusCode: integer
+    message: string
+  rfc9457: false
+problems:
+  - status: 401
+    code: UnauthorizedException
+    title: Unauthorized
+    detail: Request carried no valid partner credential.
+    method: probed
+    evidence: >-
+      GET https://api.lightningreach.org/v1/support-schemes returned
+      {"statusCode":401,"message":"UnauthorizedException"} with no
+      WWW-Authenticate header (2026-07-19).
+    applies_to: all operations
+domain_outcomes:
+  notes: >-
+    Not API errors, but the business-level rejection vocabulary the API exposes.
+    These are enumerated in the spec and are what a partner integration actually
+    branches on.
+  application_status_enum:
+    source: openapi PublicApplicationDto.status
+    values: [INVITED, STARTED, SUBMITTED, AWAITING_HOUSEHOLD, INFO_REQUESTED, REVIEWED, DECLINED, APPROVED, OPTED_OUT, INACTIVE, INELIGIBLE]
+    rejection_values: [DECLINED, INELIGIBLE, OPTED_OUT, INACTIVE]
+  decline_reasons:
+    source: openapi PublicGrantResponseDto.declineReasons
+    note: >-
+      Per-support-scheme free-text list returned by GET /v1/support-schemes; the
+      allowed decline reasons are configured per scheme, not globally enumerated.
+  file_scan_status:
+    source: openapi PublicFileResponseDto.scanStatus
+    values: [PENDING, SCANNED, QUARANTINED]
+    note: QUARANTINED indicates a malware-scan failure on an uploaded applicant asset.
+gaps:
+  - No 4xx/5xx responses documented in the OpenAPI for any of the 9 operations.
+  - No public error-reference page found on lightningreach.org.
+  - Validation (400) and not-found (404) shapes are unobservable without credentials.

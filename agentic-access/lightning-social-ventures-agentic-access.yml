@@ -1,0 +1,124 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/lightning-social-ventures-lightning-reach-openapi.json
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 9
+  by_action_class:
+    connected: 6
+    acting: 3
+  by_consequence:
+    read: 6
+    safety-critical: 3
+  human_in_the_loop_required: 3
+operations:
+- path: /v1/applications
+  method: get
+  operationId: PublicGrantApplicationsController_findAll_v1
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/applications
+  method: post
+  operationId: PublicGrantApplicationsController_submitApplication_v1
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v1/applications/{id}
+  method: get
+  operationId: PublicGrantApplicationsController_findById_v1
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/applications/{id}/assets
+  method: get
+  operationId: PublicGrantApplicationsController_getFiles_v1
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/applications/{id}/status
+  method: put
+  operationId: PublicGrantApplicationsController_updateStatusById_v1
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v1/applications/{id}/referral
+  method: post
+  operationId: PublicGrantApplicationsController_submitApplicationReferral_v1
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /v1/support-schemes
+  method: get
+  operationId: PublicGrantsController_findAll_v1
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/webhooks
+  method: get
+  operationId: PublicWebhooksController_findAll_v1
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/webhooks/keys/{id}/public
+  method: get
+  operationId: PublicWebhooksController_getPublicKey_v1
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none

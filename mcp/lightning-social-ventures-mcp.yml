@@ -1,0 +1,78 @@
+generated: '2026-07-19'
+method: searched
+status: published
+source: https://www.lightningreach.org/llms.txt
+notes: >-
+  Lightning Reach publishes a live, unauthenticated Model Context Protocol
+  endpoint on its marketing site. The endpoint is provided by the Wix Site MCP
+  platform (the site is built on Wix), so the tool surface is the generic Wix
+  site-visitor tool set rather than tools generated from the Lightning Reach
+  API. It was verified live on 2026-07-19: an MCP `initialize` call returned
+  protocolVersion 2024-11-05 and serverInfo name
+  'Site Visitor Assistant for site "Lightning Reach"'. The Lightning Reach API
+  itself (api.lightningreach.org) does NOT publish an MCP server; see
+  candidate_tools below for a derived tool surface.
+server:
+  name: lightning-reach-site
+  transport: http
+  url: https://www.lightningreach.org/_api/mcp
+  protocol_version: '2024-11-05'
+  authentication: none
+  provider: Wix Site MCP
+  docs: https://dev.wix.com/docs/develop-websites/articles/get-started/about-the-wix-site-mcp
+  verified: '2026-07-19'
+scope: >-
+  Public marketing-site content only. No access to grant applications, support
+  schemes, or any Lightning Reach API data.
+tools:
+  - name: GetBusinessDetails
+    description: Retrieves business and site details such as timezone, email, phone, and address.
+  - name: SearchInSite
+    description: Searches the site for information.
+  - name: SearchSiteApiDocs
+    description: >-
+      Retrieves the API documentation for the Wix business solutions installed
+      on this site, and informs the AI client how to use the APIs.
+  - name: GenerateVisitorToken
+    description: Creates a new visitor session and obtains a visitor access token for the site.
+  - name: CallWixSiteAPI
+    description: Calls API methods on the site to perform actions on a visitor's behalf.
+  - name: ReadFullDocsArticle
+    description: Fetches a complete article from the Wix developer documentation portal.
+  - name: ReadFullDocsMethodSchema
+    description: Fetches the full schema for a Wix API method.
+candidate_tools:
+  status: candidate
+  method: derived
+  source: openapi/lightning-social-ventures-lightning-reach-openapi.json
+  notes: >-
+    Not published by Lightning Reach. Derived one-tool-per-operation from the
+    Lightning Reach API OpenAPI as a starting point for an API-backed MCP server.
+  tools:
+    - name: list_applications
+      description: Get all applications
+      source_operation: openapi/lightning-social-ventures-lightning-reach-openapi.json#PublicGrantApplicationsController_findAll_v1
+    - name: submit_application
+      description: Submit an application
+      source_operation: openapi/lightning-social-ventures-lightning-reach-openapi.json#PublicGrantApplicationsController_submitApplication_v1
+    - name: get_application
+      description: Get application by id
+      source_operation: openapi/lightning-social-ventures-lightning-reach-openapi.json#PublicGrantApplicationsController_findById_v1
+    - name: get_application_assets
+      description: Get application assets
+      source_operation: openapi/lightning-social-ventures-lightning-reach-openapi.json#PublicGrantApplicationsController_getFiles_v1
+    - name: update_application_status
+      description: Update application status by id
+      source_operation: openapi/lightning-social-ventures-lightning-reach-openapi.json#PublicGrantApplicationsController_updateStatusById_v1
+    - name: submit_application_referral
+      description: Submit an application referral
+      source_operation: openapi/lightning-social-ventures-lightning-reach-openapi.json#PublicGrantApplicationsController_submitApplicationReferral_v1
+    - name: list_support_schemes
+      description: Get available support schemes
+      source_operation: openapi/lightning-social-ventures-lightning-reach-openapi.json#PublicGrantsController_findAll_v1
+    - name: list_webhooks
+      description: Get configured webhooks
+      source_operation: openapi/lightning-social-ventures-lightning-reach-openapi.json#PublicWebhooksController_findAll_v1
+    - name: get_webhook_public_key
+      description: Get webhook's public key
+      source_operation: openapi/lightning-social-ventures-lightning-reach-openapi.json#PublicWebhooksController_getPublicKey_v1

@@ -1,0 +1,31 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/lightning-social-ventures-lightning-reach-openapi.json
+notes: >-
+  Lightning Reach publishes no AGENTS.md and no skill files (no GitHub
+  organisation exists, no docs host resolves), so these are generated from the
+  harvested OpenAPI. Every operationId below appears verbatim in the spec.
+skills:
+  - file: lightning-social-ventures-submit-application.md
+    name: Submit an application to a Lightning Reach support scheme
+    api: openapi/lightning-social-ventures-lightning-reach-openapi.json
+    operations:
+      - PublicGrantsController_findAll_v1
+      - PublicGrantApplicationsController_submitApplication_v1
+      - PublicGrantApplicationsController_findById_v1
+  - file: lightning-social-ventures-review-and-decide.md
+    name: Review an application and record an award decision
+    api: openapi/lightning-social-ventures-lightning-reach-openapi.json
+    operations:
+      - PublicGrantApplicationsController_findAll_v1
+      - PublicGrantApplicationsController_findById_v1
+      - PublicGrantApplicationsController_getFiles_v1
+      - PublicGrantApplicationsController_updateStatusById_v1
+      - PublicGrantsController_findAll_v1
+  - file: lightning-social-ventures-refer-and-track.md
+    name: Refer a client onward and track webhook events
+    api: openapi/lightning-social-ventures-lightning-reach-openapi.json
+    operations:
+      - PublicGrantApplicationsController_submitApplicationReferral_v1
+      - PublicWebhooksController_findAll_v1
+      - PublicWebhooksController_getPublicKey_v1
