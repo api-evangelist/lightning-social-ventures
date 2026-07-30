@@ -1,26 +1,166 @@
 aid: lightning-social-ventures
 name: Lightning Social Ventures
-description: Lightning Social Ventures is a company surfaced as a portfolio company of techstars and added
-  to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+description: >-
+  Lightning Social Ventures is the UK social-impact company behind Lightning Reach, a financial support
+  platform that connects people facing hardship to grants, benefits, vouchers and assistance schemes
+  through a single profile and eligibility match. Councils, housing associations, charities, utilities
+  and banks use the platform to run and administer their own support programmes, from application intake
+  through evidence review to award and payment. Lightning Reach operates a partner-facing REST API that
+  exposes support schemes, application submission and referral, applicant evidence assets, decision and
+  award recording, and webhook subscriptions with public-key signature verification.
+accessModel:
+  pricing: unknown
+  onboarding: open
+  trial: false
+  try_now: false
+  public: true
+  label: Open access
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://static.wixstatic.com/media/b5277c_f5fd0014edb2463184acc145d446cc23~mv2.png/v1/fill/w_2400,h_1260,al_c/b5277c_f5fd0014edb2463184acc145d446cc23~mv2.png
 url: https://raw.githubusercontent.com/api-evangelist/lightning-social-ventures/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - techstars
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: openapi-harvested
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
 tags:
 - Company
-apis: []
+- Financial Inclusion
+- Grants
+- Social Impact
+- Nonprofit
+- Housing
+- Government
+- Welfare Benefits
+- United Kingdom
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: lightning-social-ventures:lightning-social-ventures-applications-api
+  name: Lightning Social Ventures Applications API
+  description: The Applications API from Lightning Social Ventures — 5 operation(s) for applications.
+  humanURL: https://api.lightningreach.org/docs
+  baseURL: https://api.lightningreach.org
+  tags:
+  - Applications
+  properties:
+  - type: OpenAPI
+    url: openapi/lightning-social-ventures-applications-api-openapi.yml
+  - type: APIReference
+    url: https://api.lightningreach.org/docs
+- aid: lightning-social-ventures:lightning-social-ventures-support-schemes-api
+  name: Lightning Social Ventures Support Schemes API
+  description: >-
+    The Support Schemes API from Lightning Social Ventures — 1 operation(s) for support schemes.
+  humanURL: https://api.lightningreach.org/docs
+  baseURL: https://api.lightningreach.org
+  tags:
+  - Support Schemes
+  properties:
+  - type: OpenAPI
+    url: openapi/lightning-social-ventures-support-schemes-api-openapi.yml
+  - type: APIReference
+    url: https://api.lightningreach.org/docs
+- aid: lightning-social-ventures:lightning-social-ventures-webhooks-api
+  name: Lightning Social Ventures Webhooks API
+  description: The Webhooks API from Lightning Social Ventures — 2 operation(s) for webhooks.
+  humanURL: https://api.lightningreach.org/docs
+  baseURL: https://api.lightningreach.org
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/lightning-social-ventures-webhooks-api-openapi.yml
+  - type: APIReference
+    url: https://api.lightningreach.org/docs
 common:
 - type: Website
   url: https://lightningreach.org/
+- type: APIReference
+  url: https://api.lightningreach.org/docs
+- type: Support
+  url: https://www.lightningreach.org/support
+- type: SignUp
+  url: https://apply.lightningreach.org/signup
+- type: Login
+  url: https://apply.lightningreach.org/login
+- type: TermsOfService
+  url: https://www.lightningreach.org/terms-and-conditions
+- type: PrivacyPolicy
+  url: https://www.lightningreach.org/privacy-policy
+- type: MCPServer
+  url: mcp/lightning-social-ventures-mcp.yml
+- type: LLMsTxt
+  url: llms/lightning-social-ventures-llms.txt
+- type: Webhooks
+  url: asyncapi/lightning-social-ventures-webhooks.yml
+- type: ErrorCatalog
+  url: errors/lightning-social-ventures-problem-types.yml
+- type: Conventions
+  url: conventions/lightning-social-ventures-conventions.yml
+- type: Lifecycle
+  url: lifecycle/lightning-social-ventures-lifecycle.yml
+- type: Conformance
+  url: conformance/lightning-social-ventures-conformance.yml
+- type: DataModel
+  url: data-model/lightning-social-ventures-data-model.yml
+- type: DomainSecurity
+  url: security/lightning-social-ventures-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/lightning-social-ventures-agentic-access.yml
+- type: AgentSkill
+  name: Lightning Reach Agent Skills
+  url: skills/_index.yml
+- type: AgentSkill
+  name: Submit an application to a Lightning Reach support scheme
+  url: skills/lightning-social-ventures-submit-application.md
+- type: AgentSkill
+  name: Review an application and record an award decision
+  url: skills/lightning-social-ventures-review-and-decide.md
+- type: AgentSkill
+  name: Refer a client onward and track webhook events
+  url: skills/lightning-social-ventures-refer-and-track.md
+x-enrichment-notes:
+  pointers_deliberately_withheld:
+  - type: Authentication
+    reason: >-
+      The authentication/ artifact exists, but it records that Lightning Reach does NOT document its auth
+      mechanism (no securitySchemes in the OpenAPI, no WWW-Authenticate challenge, no auth docs page).
+      Emitting an Authentication pointer would falsely satisfy the authentication_documented check.
+  - type: Idempotency
+    reason: The API exposes no Idempotency-Key contract; conventions/ records idempotency as unsupported.
+  - type: StatusPage
+    reason: No status page exists (status.lightningreach.org does not resolve). The API root is a bare health check.
+  - type: Deprecation
+    reason: No deprecation or versioning policy is published.
+  - type: Security
+    reason: probe-security-programs.py found no security.txt, no disclosure page and no bug-bounty programme.
+  - type: Compliance
+    reason: No certifications or compliance programme are published; nothing verifiable to point at.
+  - type: WellKnown
+    reason: No .well-known document is served on any host; well-known/ records the negative probe only.
+  - type: SDKs
+    reason: No first-party client libraries exist on npm, PyPI or any other registry.
+  - type: Documentation
+    reason: The only API documentation is the Swagger UI, already pointed at as APIReference.
+  not_applicable:
+  - scopes (no oauth2 securityScheme and no documented OAuth)
+  - packages, cli, components, sandbox, changelog, grpc (none published)
+  - decline-codes (not a payments/authorization provider; per-scheme declineReasons captured in data-model/)
+  - asyncapi spec (no AsyncAPI document; webhook surface captured instead)
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
