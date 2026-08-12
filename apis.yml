@@ -85,6 +85,8 @@ apis:
   - type: APIReference
     url: https://api.lightningreach.org/docs
 common:
+- type: Overlay
+  url: overlays/lightning-social-ventures-lightning-reach-overlay.yaml
 - type: Website
   url: https://lightningreach.org/
 - type: APIReference
