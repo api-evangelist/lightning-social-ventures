@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lightning Reach Applications Support Schemes API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Support Schemes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get available support schemes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/support-schemes"
+          },
+          "docs": "Retrieves all available support schemes for the authenticated organisation"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

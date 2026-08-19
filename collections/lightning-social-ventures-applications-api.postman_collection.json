@@ -1,0 +1,607 @@
+{
+  "item": [
+    {
+      "id": "663c4165-284f-4aa2-bc1f-9fa9ed6b0ebc",
+      "name": "Applications",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "814f2147-f2f5-463f-b2a0-c5911fef6aa3",
+          "name": "Get all applications",
+          "request": {
+            "name": "Get all applications",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "applications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "supportSchemeIds",
+                  "value": "<string>",
+                  "description": "Search by support scheme IDs"
+                },
+                {
+                  "disabled": false,
+                  "key": "search",
+                  "value": "<string>",
+                  "description": "Search by client name, email or application reference"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by application status"
+                },
+                {
+                  "disabled": false,
+                  "key": "latestSubmissionFrom",
+                  "value": "<dateTime>",
+                  "description": "Filter by latest submission date from (ISO 8601 timestamp)"
+                },
+                {
+                  "disabled": false,
+                  "key": "latestSubmissionTo",
+                  "value": "<dateTime>",
+                  "description": "Filter by latest submission date to (ISO 8601 timestamp)"
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortKey",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortOrder",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f06862c0-4ebf-4195-a0d4-a462b921be59",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "supportSchemeIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "search",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "latestSubmissionFrom",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "latestSubmissionTo",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<number>"
+                    },
+                    {
+                      "key": "sortKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"grantApplications\": [\n    {\n      \"id\": \"string\",\n      \"clientName\": \"string\",\n      \"supportSchemeId\": \"string\",\n      \"supportSchemeName\": \"string\",\n      \"status\": \"INFO_REQUESTED\",\n      \"createdAt\": \"1999-05-15T19:53:13.143Z\",\n      \"reference\": \"string\",\n      \"firstSubmissionAt\": \"2000-06-01T08:44:48.072Z\",\n      \"latestSubmissionAt\": \"1958-05-26T09:55:37.475Z\",\n      \"stage\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"clientName\": \"string\",\n      \"supportSchemeId\": \"string\",\n      \"supportSchemeName\": \"string\",\n      \"status\": \"OPTED_OUT\",\n      \"createdAt\": \"1964-12-17T17:30:49.154Z\",\n      \"reference\": \"string\",\n      \"firstSubmissionAt\": \"2019-04-04T15:57:56.386Z\",\n      \"latestSubmissionAt\": \"2014-02-08T00:00:14.260Z\",\n      \"stage\": \"string\"\n    }\n  ],\n  \"count\": 536.7463167730435\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc880474-6ca5-4818-a304-a940e616605f",
+          "name": "Submit an application",
+          "request": {
+            "name": "Submit an application",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "applications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"supportId\": \"<string>\",\n  \"declarationOfTruth\": \"<boolean>\",\n  \"modules\": [\n    {\n      \"moduleId\": \"<string>\",\n      \"data\": {\n        \"key_0\": \"<object>\"\n      }\n    },\n    {\n      \"moduleId\": \"<string>\",\n      \"data\": {\n        \"key_0\": \"<object>\"\n      }\n    }\n  ],\n  \"email\": \"<email>\",\n  \"skipSubmissionEmails\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "94187487-4090-4961-a1ac-088dfeedb4e9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firstName\": \"<string>\",\n  \"lastName\": \"<string>\",\n  \"supportId\": \"<string>\",\n  \"declarationOfTruth\": \"<boolean>\",\n  \"modules\": [\n    {\n      \"moduleId\": \"<string>\",\n      \"data\": {\n        \"info-sharing\": {\n          \"consent\": true,\n          \"informationSharing\": true\n        }\n      }\n    },\n    {\n      \"moduleId\": \"<string>\",\n      \"data\": {\n        \"info-sharing\": {\n          \"consent\": true,\n          \"informationSharing\": true\n        }\n      }\n    }\n  ],\n  \"email\": \"<email>\",\n  \"skipSubmissionEmails\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81d21f03-e22e-4236-a334-f7141f888e80",
+          "name": "Get application by id",
+          "request": {
+            "name": "Get application by id",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "applications",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeDataDictionary",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7ec530d4-657c-49d1-b47a-4a0da55c8ede",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "applications",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeDataDictionary",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"clientName\": \"string\",\n  \"supportSchemeId\": \"string\",\n  \"supportSchemeName\": \"string\",\n  \"status\": \"AWAITING_HOUSEHOLD\",\n  \"createdAt\": \"1981-03-17T12:10:36.302Z\",\n  \"reference\": \"string\",\n  \"firstSubmissionAt\": \"1972-11-09T16:18:17.304Z\",\n  \"latestSubmissionAt\": \"1971-09-10T01:33:51.788Z\",\n  \"stage\": \"string\",\n  \"applicationTasks\": [\n    {\n      \"taskId\": \"string\",\n      \"taskName\": \"string\",\n      \"data\": {},\n      \"version\": 3966.4443008764006,\n      \"clientId\": \"string\",\n      \"dataDictionary\": {}\n    },\n    {\n      \"taskId\": \"string\",\n      \"taskName\": \"string\",\n      \"data\": {},\n      \"version\": 2007.980815177346,\n      \"clientId\": \"string\",\n      \"dataDictionary\": {}\n    }\n  ],\n  \"clients\": [\n    {\n      \"id\": \"string\",\n      \"role\": \"string\",\n      \"email\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"role\": \"string\",\n      \"email\": \"string\"\n    }\n  ],\n  \"supportOrganisationName\": \"string\",\n  \"supportWorkerEmail\": \"string\",\n  \"version\": 5842.921181669873\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8e58d196-63bb-4fa4-ac61-0616397e5cac",
+          "name": "Get application assets",
+          "request": {
+            "name": "Get application assets",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "applications",
+                ":id",
+                "assets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeFormData",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b8c453ff-f046-4d3d-b965-29a4a1475790",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "applications",
+                    ":id",
+                    "assets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeFormData",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"fileName\": \"string\",\n  \"downloadUrl\": \"string\",\n  \"scanStatus\": \"SCANNED\",\n  \"version\": 8726.07736722458,\n  \"taskId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2e5718a3-616b-41a8-bbd7-a976157e5eed",
+          "name": "Update application status by id",
+          "request": {
+            "name": "Update application status by id",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "applications",
+                ":id",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"<string>\",\n  \"stage\": \"<string>\",\n  \"decisionDetails\": \"<string>\",\n  \"decisionReason\": \"<string>\",\n  \"note\": \"<string>\",\n  \"awardDate\": \"<string>\",\n  \"awards\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<number>\",\n      \"paymentType\": \"<string>\",\n      \"paymentDate\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<number>\",\n      \"paymentType\": \"<string>\",\n      \"paymentDate\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "012c2d0e-ac4e-42ca-8798-7af5d4e509ca",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "applications",
+                    ":id",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"<string>\",\n  \"stage\": \"<string>\",\n  \"decisionDetails\": \"<string>\",\n  \"decisionReason\": \"<string>\",\n  \"note\": \"<string>\",\n  \"awardDate\": \"<string>\",\n  \"awards\": [\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<number>\",\n      \"paymentType\": \"<string>\",\n      \"paymentDate\": \"<string>\",\n      \"details\": \"<string>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"value\": \"<number>\",\n      \"paymentType\": \"<string>\",\n      \"paymentDate\": \"<string>\",\n      \"details\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"1765be3b-d7f1-c25e-ef8f-7fe13f0a6447\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "433779ff-27a9-46e0-9c50-e69a4a91f9f6",
+          "name": "Submit an application referral",
+          "request": {
+            "name": "Submit an application referral",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "applications",
+                ":id",
+                "referral"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"supportId\": \"<string>\",\n  \"declarationOfTruth\": \"<boolean>\",\n  \"modules\": [\n    {\n      \"moduleId\": \"<string>\",\n      \"data\": {\n        \"key_0\": \"<object>\"\n      }\n    },\n    {\n      \"moduleId\": \"<string>\",\n      \"data\": {\n        \"key_0\": \"<object>\",\n        \"key_1\": \"<object>\",\n        \"key_2\": \"<object>\",\n        \"key_3\": \"<object>\",\n        \"key_4\": \"<object>\"\n      }\n    }\n  ],\n  \"skipSubmissionEmails\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d0b568c9-8f69-42b3-a860-21b154c94d25",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "applications",
+                    ":id",
+                    "referral"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"supportId\": \"<string>\",\n  \"declarationOfTruth\": \"<boolean>\",\n  \"modules\": [\n    {\n      \"moduleId\": \"<string>\",\n      \"data\": {\n        \"info-sharing\": {\n          \"consent\": true,\n          \"informationSharing\": true\n        }\n      }\n    },\n    {\n      \"moduleId\": \"<string>\",\n      \"data\": {\n        \"info-sharing\": {\n          \"consent\": true,\n          \"informationSharing\": true\n        }\n      }\n    }\n  ],\n  \"skipSubmissionEmails\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f419b700-0719-4516-9285-f33b63902147",
+    "name": "Lightning Reach Applications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Lightning Reach API documentation",
+      "type": "text/plain"
+    }
+  }
+}

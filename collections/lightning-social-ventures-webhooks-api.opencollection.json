@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lightning Reach Applications Webhooks API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get configured webhooks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/webhooks"
+          },
+          "docs": "Get configured webhooks"
+        },
+        {
+          "info": {
+            "name": "Get webhook's public key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/webhooks/keys/:id/public"
+          },
+          "docs": "Get webhook's public key"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

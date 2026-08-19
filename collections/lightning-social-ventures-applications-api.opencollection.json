@@ -1,0 +1,162 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Lightning Reach Applications API",
+    "version": "1.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Applications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all applications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/applications",
+            "params": [
+              {
+                "name": "supportSchemeIds",
+                "value": "",
+                "type": "query",
+                "description": "Search by support scheme IDs"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search by client name, email or application reference"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by application status"
+              },
+              {
+                "name": "latestSubmissionFrom",
+                "value": "",
+                "type": "query",
+                "description": "Filter by latest submission date from (ISO 8601 timestamp)"
+              },
+              {
+                "name": "latestSubmissionTo",
+                "value": "",
+                "type": "query",
+                "description": "Filter by latest submission date to (ISO 8601 timestamp)"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortKey",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get all applications"
+        },
+        {
+          "info": {
+            "name": "Submit an application",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/applications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit an application"
+        },
+        {
+          "info": {
+            "name": "Get application by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/applications/:id",
+            "params": [
+              {
+                "name": "includeDataDictionary",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get application by id"
+        },
+        {
+          "info": {
+            "name": "Get application assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/applications/:id/assets",
+            "params": [
+              {
+                "name": "includeFormData",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get application assets"
+        },
+        {
+          "info": {
+            "name": "Update application status by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/applications/:id/status",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update application status by id"
+        },
+        {
+          "info": {
+            "name": "Submit an application referral",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/applications/:id/referral",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit an application referral"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

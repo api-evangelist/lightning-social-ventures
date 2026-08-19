@@ -1,0 +1,104 @@
+{
+  "item": [
+    {
+      "id": "ee64ccec-bb99-42d7-8a81-73cc3f1e1424",
+      "name": "Support Schemes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "25c56ea0-ae53-43c5-a59b-0e15b4d8fd04",
+          "name": "Get available support schemes",
+          "request": {
+            "name": "Get available support schemes",
+            "description": {
+              "content": "Retrieves all available support schemes for the authenticated organisation",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "support-schemes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "af4709a7-7b2a-4557-b781-a911ebffb5e1",
+              "name": "List of available support schemes",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "support-schemes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"frozen\": false,\n    \"frozenCopy\": {},\n    \"awardReasons\": [\n      \"string\",\n      \"string\"\n    ],\n    \"reviewReasons\": [\n      \"string\",\n      \"string\"\n    ],\n    \"declineReasons\": [\n      \"string\",\n      \"string\"\n    ],\n    \"stages\": [\n      \"string\",\n      \"string\"\n    ],\n    \"createdAt\": \"1985-01-31T18:17:26.617Z\"\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"frozen\": true,\n    \"frozenCopy\": {},\n    \"awardReasons\": [\n      \"string\",\n      \"string\"\n    ],\n    \"reviewReasons\": [\n      \"string\",\n      \"string\"\n    ],\n    \"declineReasons\": [\n      \"string\",\n      \"string\"\n    ],\n    \"stages\": [\n      \"string\",\n      \"string\"\n    ],\n    \"createdAt\": \"2002-03-14T19:44:21.676Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "639dffb1-4015-4c2b-831a-3a1b6011a263",
+    "name": "Lightning Reach Applications Support Schemes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Lightning Reach API documentation",
+      "type": "text/plain"
+    }
+  }
+}
