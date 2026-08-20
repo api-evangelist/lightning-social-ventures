@@ -36,6 +36,16 @@ tags:
 - Financial Inclusion
 - Grants
 - Social Impact
+- Non-Profit
+- Housing
+- Government
+- Welfare Benefits
+- United Kingdom
+tags_raw:
+- Company
+- Financial Inclusion
+- Grants
+- Social Impact
 - Nonprofit
 - Housing
 - Government
@@ -53,6 +63,8 @@ apis:
   humanURL: https://api.lightningreach.org/docs
   baseURL: https://api.lightningreach.org
   tags:
+  - Application
+  tags_raw:
   - Applications
   properties:
   - type: OpenAPI
@@ -78,6 +90,8 @@ apis:
   humanURL: https://api.lightningreach.org/docs
   baseURL: https://api.lightningreach.org
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
