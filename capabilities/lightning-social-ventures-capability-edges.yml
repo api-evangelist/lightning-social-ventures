@@ -1,0 +1,28 @@
+slug: lightning-social-ventures
+provider: Lightning Social Ventures
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Public Sector & Government
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Applications
+  spec_file: lightning-social-ventures-applications-api-openapi.yml
+  capability_id: BC-3260.30
+  capability_id_l1: BC-3260
+  capability_name: Application Intake & Review
+  confidence: 0.7
+  evidence: POST /v1/applications PublicGrantApplicationsController_submitApplication_v1 Submit an application;
+    PUT /v1/applications/{id}/status Update application status by id; schemas AwardDto, CreateApplicationDto
+  reason: Operations receive, retrieve, and progress the status of grant applications (PublicGrantApplicationsController)
+    with award and application-task schemas, and the vendor describes councils/charities administering
+    support programmes 'from application in...'. That is grant application intake and review. Moderate
+    confidence because the beneficiaries are individuals in hardship, so a public-benefits eligibility
+    reading is also arguable.

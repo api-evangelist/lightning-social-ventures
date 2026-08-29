@@ -111,6 +111,9 @@ apis:
   - type: APIReference
     url: https://api.lightningreach.org/docs
 common:
+- type: CapabilityMap
+  url: capabilities/lightning-social-ventures-capability-edges.yml
+  name: Lightning Social Ventures Business Capability Map
 - type: Overlay
   url: overlays/lightning-social-ventures-lightning-reach-overlay.yaml
 - type: Website
