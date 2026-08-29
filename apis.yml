@@ -8,6 +8,18 @@ description: >-
   through evidence review to award and payment. Lightning Reach operates a partner-facing REST API that
   exposes support schemes, application submission and referral, applicant evidence assets, decision and
   award recording, and webhook subscriptions with public-key signature verification.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: open
