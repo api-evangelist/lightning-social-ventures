@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Lightning Reach Applications API
   description: The Lightning Reach API documentation
@@ -187,6 +187,18 @@ paths:
       - Applications
 components:
   schemas:
+    ClientDto:
+      type: object
+      properties:
+        id:
+          type: string
+        role:
+          type: string
+        email:
+          type: string
+      required:
+      - id
+      - role
     CreateReferralDto:
       type: object
       properties:
@@ -204,6 +216,101 @@ components:
       - supportId
       - declarationOfTruth
       - modules
+    ModuleDto:
+      type: object
+      properties:
+        moduleId:
+          type: string
+        data:
+          type: object
+          additionalProperties:
+            type: object
+          description: Two-level config path -> data object
+          example:
+            info-sharing:
+              consent: true
+              informationSharing: true
+      required:
+      - moduleId
+      - data
+    PublicApplicationsResponseDto:
+      type: object
+      properties:
+        grantApplications:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicApplicationDto'
+        count:
+          type: number
+      required:
+      - grantApplications
+      - count
+    PublicApplicationDto:
+      type: object
+      properties:
+        id:
+          type: string
+        clientName:
+          type: string
+        reference:
+          type: string
+        supportSchemeId:
+          type: string
+        supportSchemeName:
+          type: string
+        firstSubmissionAt:
+          format: date-time
+          type: string
+        latestSubmissionAt:
+          format: date-time
+          type: string
+        status:
+          enum:
+          - INVITED
+          - STARTED
+          - SUBMITTED
+          - AWAITING_HOUSEHOLD
+          - INFO_REQUESTED
+          - REVIEWED
+          - DECLINED
+          - APPROVED
+          - OPTED_OUT
+          - INACTIVE
+          - INELIGIBLE
+          type: string
+        stage:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - clientName
+      - supportSchemeId
+      - supportSchemeName
+      - status
+      - createdAt
+    ApplicationTaskDto:
+      type: object
+      properties:
+        taskId:
+          type: string
+        taskName:
+          type: string
+        dataDictionary:
+          type: object
+        data:
+          type: object
+        version:
+          type: number
+        clientId:
+          type: string
+      required:
+      - taskId
+      - taskName
+      - data
+      - version
+      - clientId
     PublicFileResponseDto:
       type: object
       properties:
@@ -230,35 +337,74 @@ components:
       - downloadUrl
       - scanStatus
       - version
-    PublicApplicationsResponseDto:
+    PublicApplicationDataResponseDto:
       type: object
       properties:
-        grantApplications:
+        id:
+          type: string
+        clientName:
+          type: string
+        reference:
+          type: string
+        supportSchemeId:
+          type: string
+        supportSchemeName:
+          type: string
+        firstSubmissionAt:
+          format: date-time
+          type: string
+        latestSubmissionAt:
+          format: date-time
+          type: string
+        status:
+          enum:
+          - INVITED
+          - STARTED
+          - SUBMITTED
+          - AWAITING_HOUSEHOLD
+          - INFO_REQUESTED
+          - REVIEWED
+          - DECLINED
+          - APPROVED
+          - OPTED_OUT
+          - INACTIVE
+          - INELIGIBLE
+          type: string
+        stage:
+          type: string
+        applicationTasks:
           type: array
           items:
-            $ref: '#/components/schemas/PublicApplicationDto'
-        count:
+            $ref: '#/components/schemas/ApplicationTaskDto'
+        clients:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClientDto'
+        supportOrganisationName:
+          type: string
+        supportWorkerEmail:
+          type: string
+        version:
           type: number
+        createdAt:
+          format: date-time
+          type: string
       required:
-      - grantApplications
-      - count
-    ModuleDto:
+      - id
+      - clientName
+      - supportSchemeId
+      - supportSchemeName
+      - status
+      - createdAt
+    UpdateStatusResponseDto:
       type: object
       properties:
-        moduleId:
+        id:
           type: string
-        data:
-          type: object
-          additionalProperties:
-            type: object
-          description: Two-level config path -> data object
-          example:
-            info-sharing:
-              consent: true
-              informationSharing: true
+          description: ID of the updated application
+          format: uuid
       required:
-      - moduleId
-      - data
+      - id
     AwardDto:
       type: object
       properties:
@@ -372,93 +518,6 @@ components:
           type: string
       required:
       - type
-    ClientDto:
-      type: object
-      properties:
-        id:
-          type: string
-        role:
-          type: string
-        email:
-          type: string
-      required:
-      - id
-      - role
-    ApplicationTaskDto:
-      type: object
-      properties:
-        taskId:
-          type: string
-        taskName:
-          type: string
-        dataDictionary:
-          type: object
-        data:
-          type: object
-        version:
-          type: number
-        clientId:
-          type: string
-      required:
-      - taskId
-      - taskName
-      - data
-      - version
-      - clientId
-    PublicApplicationDto:
-      type: object
-      properties:
-        id:
-          type: string
-        clientName:
-          type: string
-        reference:
-          type: string
-        supportSchemeId:
-          type: string
-        supportSchemeName:
-          type: string
-        firstSubmissionAt:
-          format: date-time
-          type: string
-        latestSubmissionAt:
-          format: date-time
-          type: string
-        status:
-          enum:
-          - INVITED
-          - STARTED
-          - SUBMITTED
-          - AWAITING_HOUSEHOLD
-          - INFO_REQUESTED
-          - REVIEWED
-          - DECLINED
-          - APPROVED
-          - OPTED_OUT
-          - INACTIVE
-          - INELIGIBLE
-          type: string
-        stage:
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-      required:
-      - id
-      - clientName
-      - supportSchemeId
-      - supportSchemeName
-      - status
-      - createdAt
-    UpdateStatusResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: ID of the updated application
-          format: uuid
-      required:
-      - id
     CreateApplicationDto:
       type: object
       properties:
@@ -517,62 +576,3 @@ components:
             $ref: '#/components/schemas/AwardDto'
       required:
       - status
-    PublicApplicationDataResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        clientName:
-          type: string
-        reference:
-          type: string
-        supportSchemeId:
-          type: string
-        supportSchemeName:
-          type: string
-        firstSubmissionAt:
-          format: date-time
-          type: string
-        latestSubmissionAt:
-          format: date-time
-          type: string
-        status:
-          enum:
-          - INVITED
-          - STARTED
-          - SUBMITTED
-          - AWAITING_HOUSEHOLD
-          - INFO_REQUESTED
-          - REVIEWED
-          - DECLINED
-          - APPROVED
-          - OPTED_OUT
-          - INACTIVE
-          - INELIGIBLE
-          type: string
-        stage:
-          type: string
-        applicationTasks:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationTaskDto'
-        clients:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClientDto'
-        supportOrganisationName:
-          type: string
-        supportWorkerEmail:
-          type: string
-        version:
-          type: number
-        createdAt:
-          format: date-time
-          type: string
-      required:
-      - id
-      - clientName
-      - supportSchemeId
-      - supportSchemeName
-      - status
-      - createdAt

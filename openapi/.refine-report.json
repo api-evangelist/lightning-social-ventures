@@ -1,9 +1,7 @@
 {
   "provider": "lightning-social-ventures",
   "sources": [
-    "lightning-social-ventures-applications-api-openapi.yml",
-    "lightning-social-ventures-support-schemes-api-openapi.yml",
-    "lightning-social-ventures-webhooks-api-openapi.yml"
+    "_original/lightning-social-ventures-lightning-reach-openapi.json"
   ],
   "outputs": [
     "lightning-social-ventures-applications-api-openapi.yml",
@@ -13,6 +11,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "lightning-social-ventures-lightning-reach-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "lightning-social-ventures-lightning-reach-openapi.json: declared missing tag: Applications",
+    "lightning-social-ventures-lightning-reach-openapi.json: declared missing tag: Support Schemes",
+    "lightning-social-ventures-lightning-reach-openapi.json: declared missing tag: Webhooks",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "lightning-social-ventures-applications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lightning-social-ventures-support-schemes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "lightning-social-ventures-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

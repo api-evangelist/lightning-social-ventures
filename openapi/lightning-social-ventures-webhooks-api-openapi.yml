@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Lightning Reach Applications Webhooks API
+  title: Lightning Reach Webhooks API
   description: The Lightning Reach API documentation
   version: '1.0'
   contact: {}
@@ -38,6 +38,13 @@ paths:
       - Webhooks
 components:
   schemas:
+    WebhookPublicKeyResponseDto:
+      type: object
+      properties:
+        key:
+          type: string
+      required:
+      - key
     WebhookPublicDto:
       type: object
       properties:
@@ -60,10 +67,3 @@ components:
       - events
       - webhookUrl
       - createdAt
-    WebhookPublicKeyResponseDto:
-      type: object
-      properties:
-        key:
-          type: string
-      required:
-      - key
