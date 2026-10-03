@@ -187,18 +187,27 @@ paths:
       - Applications
 components:
   schemas:
-    PublicApplicationsResponseDto:
+    ApplicationTaskDto:
       type: object
       properties:
-        grantApplications:
-          type: array
-          items:
-            $ref: '#/components/schemas/PublicApplicationDto'
-        count:
+        taskId:
+          type: string
+        taskName:
+          type: string
+        dataDictionary:
+          type: object
+        data:
+          type: object
+        version:
           type: number
+        clientId:
+          type: string
       required:
-      - grantApplications
-      - count
+      - taskId
+      - taskName
+      - data
+      - version
+      - clientId
     ModuleDto:
       type: object
       properties:
@@ -216,6 +225,38 @@ components:
       required:
       - moduleId
       - data
+    UpdateApplicationStatusDto:
+      type: object
+      properties:
+        status:
+          enum:
+          - INVITED
+          - STARTED
+          - SUBMITTED
+          - AWAITING_HOUSEHOLD
+          - REVIEWED
+          - DECLINED
+          - APPROVED
+          - OPTED_OUT
+          - INACTIVE
+          - INELIGIBLE
+          type: string
+        stage:
+          type: string
+        decisionDetails:
+          type: string
+        decisionReason:
+          type: string
+        note:
+          type: string
+        awardDate:
+          type: string
+        awards:
+          type: array
+          items:
+            $ref: '#/components/schemas/AwardDto'
+      required:
+      - status
     AwardDto:
       type: object
       properties:
@@ -329,6 +370,49 @@ components:
           type: string
       required:
       - type
+    CreateApplicationDto:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        supportId:
+          type: string
+        declarationOfTruth:
+          type: boolean
+        skipSubmissionEmails:
+          type: boolean
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleDto'
+      required:
+      - firstName
+      - lastName
+      - supportId
+      - declarationOfTruth
+      - modules
+    CreateReferralDto:
+      type: object
+      properties:
+        supportId:
+          type: string
+        declarationOfTruth:
+          type: boolean
+        skipSubmissionEmails:
+          type: boolean
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleDto'
+      required:
+      - supportId
+      - declarationOfTruth
+      - modules
     PublicApplicationDataResponseDto:
       type: object
       properties:
@@ -433,27 +517,6 @@ components:
       - supportSchemeName
       - status
       - createdAt
-    ApplicationTaskDto:
-      type: object
-      properties:
-        taskId:
-          type: string
-        taskName:
-          type: string
-        dataDictionary:
-          type: object
-        data:
-          type: object
-        version:
-          type: number
-        clientId:
-          type: string
-      required:
-      - taskId
-      - taskName
-      - data
-      - version
-      - clientId
     UpdateStatusResponseDto:
       type: object
       properties:
@@ -463,81 +526,6 @@ components:
           format: uuid
       required:
       - id
-    UpdateApplicationStatusDto:
-      type: object
-      properties:
-        status:
-          enum:
-          - INVITED
-          - STARTED
-          - SUBMITTED
-          - AWAITING_HOUSEHOLD
-          - REVIEWED
-          - DECLINED
-          - APPROVED
-          - OPTED_OUT
-          - INACTIVE
-          - INELIGIBLE
-          type: string
-        stage:
-          type: string
-        decisionDetails:
-          type: string
-        decisionReason:
-          type: string
-        note:
-          type: string
-        awardDate:
-          type: string
-        awards:
-          type: array
-          items:
-            $ref: '#/components/schemas/AwardDto'
-      required:
-      - status
-    CreateReferralDto:
-      type: object
-      properties:
-        supportId:
-          type: string
-        declarationOfTruth:
-          type: boolean
-        skipSubmissionEmails:
-          type: boolean
-        modules:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModuleDto'
-      required:
-      - supportId
-      - declarationOfTruth
-      - modules
-    CreateApplicationDto:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-        firstName:
-          type: string
-        lastName:
-          type: string
-        supportId:
-          type: string
-        declarationOfTruth:
-          type: boolean
-        skipSubmissionEmails:
-          type: boolean
-        modules:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModuleDto'
-      required:
-      - firstName
-      - lastName
-      - supportId
-      - declarationOfTruth
-      - modules
     ClientDto:
       type: object
       properties:
@@ -576,3 +564,15 @@ components:
       - downloadUrl
       - scanStatus
       - version
+    PublicApplicationsResponseDto:
+      type: object
+      properties:
+        grantApplications:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicApplicationDto'
+        count:
+          type: number
+      required:
+      - grantApplications
+      - count

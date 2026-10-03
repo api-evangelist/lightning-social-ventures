@@ -38,13 +38,6 @@ paths:
       - Webhooks
 components:
   schemas:
-    WebhookPublicKeyResponseDto:
-      type: object
-      properties:
-        key:
-          type: string
-      required:
-      - key
     WebhookPublicDto:
       type: object
       properties:
@@ -67,3 +60,10 @@ components:
       - events
       - webhookUrl
       - createdAt
+    WebhookPublicKeyResponseDto:
+      type: object
+      properties:
+        key:
+          type: string
+      required:
+      - key
