@@ -187,27 +187,65 @@ paths:
       - Applications
 components:
   schemas:
-    ApplicationTaskDto:
+    PublicApplicationDataResponseDto:
       type: object
       properties:
-        taskId:
+        id:
           type: string
-        taskName:
+        clientName:
           type: string
-        dataDictionary:
-          type: object
-        data:
-          type: object
+        reference:
+          type: string
+        supportSchemeId:
+          type: string
+        supportSchemeName:
+          type: string
+        firstSubmissionAt:
+          format: date-time
+          type: string
+        latestSubmissionAt:
+          format: date-time
+          type: string
+        status:
+          enum:
+          - INVITED
+          - STARTED
+          - SUBMITTED
+          - AWAITING_HOUSEHOLD
+          - INFO_REQUESTED
+          - REVIEWED
+          - DECLINED
+          - APPROVED
+          - OPTED_OUT
+          - INACTIVE
+          - INELIGIBLE
+          type: string
+        stage:
+          type: string
+        applicationTasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/ApplicationTaskDto'
+        clients:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClientDto'
+        supportOrganisationName:
+          type: string
+        supportWorkerEmail:
+          type: string
         version:
           type: number
-        clientId:
+        createdAt:
+          format: date-time
           type: string
       required:
-      - taskId
-      - taskName
-      - data
-      - version
-      - clientId
+      - id
+      - clientName
+      - supportSchemeId
+      - supportSchemeName
+      - status
+      - createdAt
     ModuleDto:
       type: object
       properties:
@@ -225,6 +263,86 @@ components:
       required:
       - moduleId
       - data
+    UpdateStatusResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the updated application
+          format: uuid
+      required:
+      - id
+    PublicApplicationDto:
+      type: object
+      properties:
+        id:
+          type: string
+        clientName:
+          type: string
+        reference:
+          type: string
+        supportSchemeId:
+          type: string
+        supportSchemeName:
+          type: string
+        firstSubmissionAt:
+          format: date-time
+          type: string
+        latestSubmissionAt:
+          format: date-time
+          type: string
+        status:
+          enum:
+          - INVITED
+          - STARTED
+          - SUBMITTED
+          - AWAITING_HOUSEHOLD
+          - INFO_REQUESTED
+          - REVIEWED
+          - DECLINED
+          - APPROVED
+          - OPTED_OUT
+          - INACTIVE
+          - INELIGIBLE
+          type: string
+        stage:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+      - id
+      - clientName
+      - supportSchemeId
+      - supportSchemeName
+      - status
+      - createdAt
+    PublicFileResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        fileName:
+          type: string
+        downloadUrl:
+          type: string
+          description: Download URL expires in 30 minutes
+        scanStatus:
+          enum:
+          - PENDING
+          - SCANNED
+          - QUARANTINED
+          type: string
+        version:
+          type: number
+        taskId:
+          type: string
+      required:
+      - id
+      - fileName
+      - downloadUrl
+      - scanStatus
+      - version
     UpdateApplicationStatusDto:
       type: object
       properties:
@@ -257,6 +375,94 @@ components:
             $ref: '#/components/schemas/AwardDto'
       required:
       - status
+    PublicApplicationsResponseDto:
+      type: object
+      properties:
+        grantApplications:
+          type: array
+          items:
+            $ref: '#/components/schemas/PublicApplicationDto'
+        count:
+          type: number
+      required:
+      - grantApplications
+      - count
+    CreateReferralDto:
+      type: object
+      properties:
+        supportId:
+          type: string
+        declarationOfTruth:
+          type: boolean
+        skipSubmissionEmails:
+          type: boolean
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleDto'
+      required:
+      - supportId
+      - declarationOfTruth
+      - modules
+    ClientDto:
+      type: object
+      properties:
+        id:
+          type: string
+        role:
+          type: string
+        email:
+          type: string
+      required:
+      - id
+      - role
+    ApplicationTaskDto:
+      type: object
+      properties:
+        taskId:
+          type: string
+        taskName:
+          type: string
+        dataDictionary:
+          type: object
+        data:
+          type: object
+        version:
+          type: number
+        clientId:
+          type: string
+      required:
+      - taskId
+      - taskName
+      - data
+      - version
+      - clientId
+    CreateApplicationDto:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        supportId:
+          type: string
+        declarationOfTruth:
+          type: boolean
+        skipSubmissionEmails:
+          type: boolean
+        modules:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModuleDto'
+      required:
+      - firstName
+      - lastName
+      - supportId
+      - declarationOfTruth
+      - modules
     AwardDto:
       type: object
       properties:
@@ -370,209 +576,3 @@ components:
           type: string
       required:
       - type
-    CreateApplicationDto:
-      type: object
-      properties:
-        email:
-          type: string
-          format: email
-        firstName:
-          type: string
-        lastName:
-          type: string
-        supportId:
-          type: string
-        declarationOfTruth:
-          type: boolean
-        skipSubmissionEmails:
-          type: boolean
-        modules:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModuleDto'
-      required:
-      - firstName
-      - lastName
-      - supportId
-      - declarationOfTruth
-      - modules
-    CreateReferralDto:
-      type: object
-      properties:
-        supportId:
-          type: string
-        declarationOfTruth:
-          type: boolean
-        skipSubmissionEmails:
-          type: boolean
-        modules:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModuleDto'
-      required:
-      - supportId
-      - declarationOfTruth
-      - modules
-    PublicApplicationDataResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        clientName:
-          type: string
-        reference:
-          type: string
-        supportSchemeId:
-          type: string
-        supportSchemeName:
-          type: string
-        firstSubmissionAt:
-          format: date-time
-          type: string
-        latestSubmissionAt:
-          format: date-time
-          type: string
-        status:
-          enum:
-          - INVITED
-          - STARTED
-          - SUBMITTED
-          - AWAITING_HOUSEHOLD
-          - INFO_REQUESTED
-          - REVIEWED
-          - DECLINED
-          - APPROVED
-          - OPTED_OUT
-          - INACTIVE
-          - INELIGIBLE
-          type: string
-        stage:
-          type: string
-        applicationTasks:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApplicationTaskDto'
-        clients:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClientDto'
-        supportOrganisationName:
-          type: string
-        supportWorkerEmail:
-          type: string
-        version:
-          type: number
-        createdAt:
-          format: date-time
-          type: string
-      required:
-      - id
-      - clientName
-      - supportSchemeId
-      - supportSchemeName
-      - status
-      - createdAt
-    PublicApplicationDto:
-      type: object
-      properties:
-        id:
-          type: string
-        clientName:
-          type: string
-        reference:
-          type: string
-        supportSchemeId:
-          type: string
-        supportSchemeName:
-          type: string
-        firstSubmissionAt:
-          format: date-time
-          type: string
-        latestSubmissionAt:
-          format: date-time
-          type: string
-        status:
-          enum:
-          - INVITED
-          - STARTED
-          - SUBMITTED
-          - AWAITING_HOUSEHOLD
-          - INFO_REQUESTED
-          - REVIEWED
-          - DECLINED
-          - APPROVED
-          - OPTED_OUT
-          - INACTIVE
-          - INELIGIBLE
-          type: string
-        stage:
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-      required:
-      - id
-      - clientName
-      - supportSchemeId
-      - supportSchemeName
-      - status
-      - createdAt
-    UpdateStatusResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: ID of the updated application
-          format: uuid
-      required:
-      - id
-    ClientDto:
-      type: object
-      properties:
-        id:
-          type: string
-        role:
-          type: string
-        email:
-          type: string
-      required:
-      - id
-      - role
-    PublicFileResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        fileName:
-          type: string
-        downloadUrl:
-          type: string
-          description: Download URL expires in 30 minutes
-        scanStatus:
-          enum:
-          - PENDING
-          - SCANNED
-          - QUARANTINED
-          type: string
-        version:
-          type: number
-        taskId:
-          type: string
-      required:
-      - id
-      - fileName
-      - downloadUrl
-      - scanStatus
-      - version
-    PublicApplicationsResponseDto:
-      type: object
-      properties:
-        grantApplications:
-          type: array
-          items:
-            $ref: '#/components/schemas/PublicApplicationDto'
-        count:
-          type: number
-      required:
-      - grantApplications
-      - count
