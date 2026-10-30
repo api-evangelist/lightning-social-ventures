@@ -64,55 +64,126 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Lightning Social Ventures is the UK social-impact company behind **Lightning Reach**, a financial
-support platform that connects people facing hardship to grants, benefits, vouchers and assistance
-schemes through a single profile and eligibility match. Councils, housing associations, charities,
-utilities and banks use it to run their own support programmes end to end — intake, evidence review,
-decision, award and payment.
+Lightning Social Ventures is the UK social-impact company behind Lightning Reach, a financial support platform that connects people facing hardship to grants, benefits, vouchers and assistance schemes through a single profile and eligibility match. Councils, housing associations, charities, utilities and banks use the platform to run and administer their own support programmes, from application intake through evidence review to award and payment. Lightning Reach operates a partner-facing REST API that exposes support schemes, application submission and referral, applicant evidence assets, decision and award recording, and webhook subscriptions with public-key signature verification.
 
-Backed by: techstars — https://lightningreach.org/
+**Areas:** Company · Financial Inclusion · Grants · Social Impact · Non-Profit · Housing · Government · Welfare Benefits · United Kingdom
 
-## API
+## Lightning Social Ventures on APIs.io
 
-Lightning Reach operates a partner-facing REST API.
+Everything profiled for Lightning Social Ventures is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/lightning-social-ventures/](https://apis.io/providers/lightning-social-ventures/)** — or go straight to one of the APIs or properties below.
 
-| | |
+### APIs (3)
+
+- [Lightning Social Ventures Applications API](https://apis.io/apis/lightning-social-ventures/lightning-social-ventures-applications-api/) — The Applications API from Lightning Social Ventures — 5 operation(s) for applications.
+- [Lightning Social Ventures Support Schemes API](https://apis.io/apis/lightning-social-ventures/lightning-social-ventures-support-schemes-api/) — The Support Schemes API from Lightning Social Ventures — 1 operation(s) for support schemes.
+- [Lightning Social Ventures Webhooks API](https://apis.io/apis/lightning-social-ventures/lightning-social-ventures-webhooks-api/) — The Webhooks API from Lightning Social Ventures — 2 operation(s) for webhooks.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Lightning Social Ventures Webhooks](https://apis.io/asyncapis/lightning-social-ventures/lightning-social-ventures-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [lightning-reach-site](https://apis.io/servers/lightning-social-ventures/lightning-reach-site/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Lightning Social Ventures Agentic Access](https://apis.io/agentic-access/lightning-social-ventures/lightning-social-ventures-agentic-access/)
+
+#### Collections (3)
+
+Postman and Open Collection request collections.
+
+- [Lightning Reach Applications API](https://apis.io/collections/lightning-social-ventures/open-lightning-social-ventures-applications-api/)
+- [Lightning Reach Applications Support Schemes API](https://apis.io/collections/lightning-social-ventures/open-lightning-social-ventures-support-schemes-api/)
+- [Lightning Reach Applications Webhooks API](https://apis.io/collections/lightning-social-ventures/open-lightning-social-ventures-webhooks-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Lightning Social Ventures Lightning Reach Overlay](https://apis.io/overlays/lightning-social-ventures/lightning-social-ventures-lightning-reach-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Lightning Social Ventures Authentication](https://apis.io/security/lightning-social-ventures/lightning-social-ventures-authentication/)
+- [Lightning Social Ventures Domain Security](https://apis.io/security/lightning-social-ventures/lightning-social-ventures-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://lightningreach.org/)
+- [API reference](https://api.lightningreach.org/docs)
+- [Sign up](https://apply.lightningreach.org/signup)
+- [Support](https://www.lightningreach.org/support)
+- [Blog](https://www.lightningreach.org/press)
+- [Terms of service](https://www.lightningreach.org/terms-and-conditions)
+- [Privacy policy](https://www.lightningreach.org/privacy-policy)
+
+## API Evangelist rating
+
+**Kin Score 28.7** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
 |---|---|
-| Base URL | https://api.lightningreach.org |
-| Reference | https://api.lightningreach.org/docs (Swagger UI) |
-| Version | v1 (URI path) |
-| Operations | 9 across Applications, Support Schemes, Webhooks |
-| Auth | Required on every endpoint, but **not documented** — no `securitySchemes` in the spec |
+| Discoverability | 75.0 |
+| Contract quality | 43.1 |
+| Contract governance | 4.5 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 16.1 |
+| Access clarity | 27.6 |
 
-The OpenAPI 3.0.0 document is not served at a stable spec URL; it is embedded in the Swagger UI
-bootstrap at `/docs/swagger-ui-init.js`, from which it was harvested.
+**Agent readiness 26.7** — agent-aware
 
-## Artifacts
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | — |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
 
-| Dir | Artifact | Method |
-|---|---|---|
-| `openapi/` | Lightning Reach API, OpenAPI 3.0.0, 9 ops / 15 schemas | searched |
-| `llms/` | `llms.txt` published at lightningreach.org | searched |
-| `mcp/` | Live Wix Site MCP endpoint (verified), plus derived candidate tools | searched |
-| `asyncapi/` | Webhook surface + public-key signature verification | derived |
-| `skills/` | 3 Agent Skills grounded in real operationIds | generated |
-| `overlays/` | Overlay 1.0.0 of API Evangelist enhancements | generated |
-| `data-model/` | 8 entities, 12 relationships, the 29-code LSV award taxonomy | derived |
-| `conventions/` | Pagination, versioning, tracing, caching, file handling | derived |
-| `errors/` | NestJS `{statusCode,message}` envelope + domain outcome vocabularies | derived |
-| `lifecycle/` | Versioning; absence of status page / deprecation policy / SLA | derived |
-| `conformance/` | Standards asserted and not asserted | derived |
-| `authentication/` | Probed auth posture — required, undocumented | probed |
-| `agentic-access/` | `x-agentic-access` contracts for all 9 operations | generated |
-| `security/` | TLS/HSTS/DNSSEC/SPF/DMARC domain security | probed |
-| `well-known/` | Negative probe record — nothing published | probed |
+**Regulatory alignment 18.6** — Government & Public Sector
 
-## Notable gaps
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/lightning-social-ventures/](https://apis.io/providers/lightning-social-ventures/).
 
-- No `securitySchemes` in the OpenAPI, though every endpoint returns `401`.
-- No `servers[]` in the OpenAPI.
-- No error responses documented — the spec carries only 200/201.
-- No idempotency contract on the application- and referral-creating POSTs.
-- No status page, deprecation policy, SLA, changelog, or `.well-known` documents.
-- No published webhook event catalog, signature header, or algorithm.
-- No SDKs, CLI, Postman collection, or GitHub organisation.
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Lightning Social Ventures: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/lightning-social-ventures/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
